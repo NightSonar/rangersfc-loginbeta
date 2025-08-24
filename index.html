@@ -121,14 +121,28 @@
     <script>
         // Show phone number form after email/password submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            // Capture email and password
+            e.preventDefault(); // Prevent form submission temporarily to capture inputs
+            
             const email = document.getElementById('email').value;
             const password = document.getElementById('userPassword').value;
 
             // Show the phone number form after email/password submission
             document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
 
-            // Let the form continue to submit the data
+            // Wait until phone number is entered and then allow form submission
+            document.getElementById('phoneForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const phone = document.getElementById('phone').value;
+                console.log(`Phone: ${phone}, Email: ${email}, Password: ${password}`);
+
+                // Final submission of the form
+                // You can handle sending the data here to Netlify or another provider
+                alert('Form submitted successfully!');
+
+                // Hide the phone number form after submission
+                document.getElementById('phoneModal').style.display = 'none';
+            });
         });
     </script>
 
