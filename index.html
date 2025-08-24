@@ -83,6 +83,12 @@
             display: none;
         }
 
+        .info-text {
+            font-size: 14px;
+            color: #888;
+            margin-top: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -101,6 +107,7 @@
         <!-- Second form: phone number (hidden initially) -->
         <div id="phoneModal">
             <h2>Enter Your Phone Number</h2>
+            <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
             <form id="phoneForm">
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
                 <button type="submit">Submit</button>
